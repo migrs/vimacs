@@ -46,22 +46,10 @@
 " Have <unique> for all maps?
 
 " Load Vimacs?
-if v:progname =~ '^vi$'
-  " Never load Vimacs if user wants true Vi!  (We're not _that_ evil 8)
-  if !exists("g:VM_Enabled")
-    let g:VM_Enabled = 0
-  endif
-  finish
-elseif v:progname =~ 'vimacs'
-  let g:VM_Enabled = 1
-elseif v:progname =~ 'vemacs' || v:progname == 'vm'
-  let g:VM_Enabled = 1
-  set insertmode
-elseif !exists("g:VM_Enabled") || g:VM_Enabled == 0
+if exists("g:VM_Enabled") && g:VM_Enabled == 0
   " A vim user should explicitly enable Vimacs
   finish
 endif
-
 
 if version < 600
   " We require Vim 6 to work :(
@@ -158,7 +146,7 @@ endif
 set winaltkeys=no
 " Emacs normally wraps everything
 LetDefault g:VM_Wrap 2
-LetDefault g:VM_WrapHL 1
+LetDefault g:VM_WrapHL 0
 if g:VM_Wrap==2
   set whichwrap=b,s,<,>,[,],~
   if g:VM_WrapHL
@@ -179,7 +167,7 @@ set backspace=indent,eol,start
 " (This has got to be the coolest option name ever, btw)
 set wildcharm=<Tab>
 " Recognise key sequences that start with <Esc> in Insert Mode
-set esckeys
+" set esckeys
 
 
 "
@@ -187,7 +175,7 @@ set esckeys
 "
 
 " Pressing <M-x> sends <Esc>x?  (As Unix terminals often do)
-LetDefault g:VM_UnixConsoleMetaSendsEsc 1
+LetDefault g:VM_UnixConsoleMetaSendsEsc 0
 
 " One or two <Esc>s required to go back to Normal mode?
 LetDefault g:VM_SingleEscToNormal 1
